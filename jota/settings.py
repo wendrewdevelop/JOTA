@@ -87,8 +87,12 @@ WSGI_APPLICATION = 'jota.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("NAME"),  # Nome do seu banco de dados
+        'USER': config("USER"),  # Substitua pelo seu nome de usuário do PostgreSQL
+        'PASSWORD': config("PASSWORD"),  # Substitua pela sua senha do PostgreSQL
+        'HOST': config("HOST"),  # IP do seu servidor PostgreSQL
+        'PORT': config("PORT"),  # Porta padrão do PostgreSQL
     }
 }
 
