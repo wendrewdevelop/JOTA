@@ -1,3 +1,4 @@
+from datetime import timezone, datetime
 import uuid
 from django.db import models
 
@@ -8,7 +9,7 @@ class News(models.Model):
         ('published', 'Published'),
     ]
 
-    news_id = models.UUIDield(
+    news_id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
         editable=False
@@ -23,7 +24,7 @@ class News(models.Model):
         null=True,
         blank=True
     )
-    image = FileField(
+    post_image = models.FileField(
         upload_to='uploads/%Y/%m/%d/'
     )
     content = models.TextField()
@@ -41,8 +42,17 @@ class News(models.Model):
         default='rascunho',  # Valor padrão
         verbose_name='Status'
     )
+    scheduled_post = models.DateTimeField(
+        null=True,
+        blank=True
+    )
 
     class Meta:
         verbose_name = 'news'
         verbose_name_plural = 'news'
         db_table = 'tb_news'
+
+    def publish_scheduled(self):
+        if self.scheduled_post and datetime.now() >= self.scheduled_post:
+            self.status = 'published'
+            self.save()

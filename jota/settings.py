@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -47,7 +48,9 @@ PROJECT_APPS = [
 
 THIRDY_APPS = [
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'drf_spectacular',
+    'django_celery_beat',
 ]
 
 INSTALLED_APPS = DEFAULT_APPS + PROJECT_APPS + THIRDY_APPS
@@ -152,6 +155,20 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+# DRF SWAGGER DOC CONFIGURATION USING SPECTACULAR LIB.
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'JOTA API',
+    'DESCRIPTION': 'JOTA API DOCUMENTATION',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
+
 # API SETTINGS
 DEFAULT_API_URL_PREFIX = 'api/v1'
 AUTH_USER_MODEL = 'users.User'
+
+# Celery
+CELERY_BROKER_URL = 'redis://192.168.3.60:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
