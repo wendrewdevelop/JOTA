@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import check_password
+from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
 
 
@@ -23,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
         return data
 
 
-class CustomAuthTokenSerializer(serializers.Serializer):
+class CustomJWTAuthSerializer(serializers.Serializer):
     email = serializers.EmailField(label="Email")
     password = serializers.CharField(
         label="Password",
@@ -43,23 +44,15 @@ class CustomAuthTokenSerializer(serializers.Serializer):
         if not email or not password:
             msg = "Must include 'email' and 'password'."
             raise serializers.ValidationError(msg, code="authorization")
-
-        if password == user.temporary_password:
-            data = {
-                "user": {
-                    "id": user.id,
-                    "email": user.email,
-                    "temporary_password": True
-                }
-            }
         else:
             if not check_password(password, user.password):
                 msg = "Incorrect password."
                 raise serializers.ValidationError(msg, code="authorization")
 
-            token, _ = Token.objects.get_or_create(user=user)
+            refresh = RefreshToken.for_user(user)
             data = {
-                "token": token.key,
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
                 "user": {
                     "id": user.id,
                     "first_name": user.first_name,

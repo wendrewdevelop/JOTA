@@ -7,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
@@ -17,7 +18,7 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.throttling import UserRateThrottle
 from users.models import User
-from users.serializers import UserSerializer, CustomAuthTokenSerializer
+from users.serializers import UserSerializer, CustomJWTAuthSerializer
 
 
 class UserViewset(ModelViewSet):
@@ -88,15 +89,11 @@ class UserViewset(ModelViewSet):
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CustomObtainAuthToken(ObtainAuthToken):
+class CustomJWTAuthView(APIView):
     throttle_classes = [UserRateThrottle]
     throttle_scope = 'user_individual'
-    serializer_class = CustomAuthTokenSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data,
-            context={"request": request}
-        )
+        serializer = CustomJWTAuthSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         return Response(serializer.validated_data, status=status.HTTP_200_OK)

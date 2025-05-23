@@ -20,6 +20,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework import routers
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularJSONAPIView,
@@ -28,7 +33,7 @@ from drf_spectacular.views import (
 )
 from users.views import (
     UserViewset,
-    CustomObtainAuthToken
+    CustomJWTAuthView
 )
 from news.views import (
     NewsViewSet
@@ -50,7 +55,7 @@ router.register(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    path('auth/login/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
+    path('auth/jwt/login/', CustomJWTAuthView.as_view(), name='custom_jwt_login'),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/swagger/", SpectacularSwaggerView.as_view(url_name="schema")),
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema")),
