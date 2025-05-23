@@ -228,3 +228,22 @@ Content: {
     "password": "<senha>"
 }
 ```
+
+## **13. Docker**
+
+No terminal
+
+```
+# BUILD e UP
+docker-compose up --build
+
+# Rodar as migrações dentro do container
+docker-compose exec web python manage.py migrate
+
+# Criar um superusuário:
+docker-compose exec web python manage.py createsuperuser
+
+```
+- API rodando em: http://localhost:8000
+- PostgreSQL rodando na porta: 5432
+
