@@ -48,48 +48,19 @@ class UserViewset(ModelViewSet):
         return super(UserViewset, self).list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
-        data = request.data
-        access_token = request.data.get('access_token')
-        hashed_password = make_password(data['password'])
-        default_user_folder = f'{data["first_name"]}_{data["last_name"]}_{data["cpf_cnpj"][:5]}'
-        data["folder_name"] = default_user_folder.replace(" ", "_")
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
-        }
-        drive_id = config('drive_id')
+        data = request.data.copy()
+        data['password'] = make_password(data['password'])
 
-        try:
-            user = User(
-                email=data['email'],
-                password=hashed_password,
-                first_name=data['first_name'],
-                last_name=data['last_name'],
-                folder_name=default_user_folder.replace(" ", "_"),
-                phone=data['phone'],
-                cpf_cnpj=data['cpf_cnpj'],
-                birthday=data['birthday'],
-                is_staff=data.get('is_staff', False)
-            )
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
 
-            response = httpx.post(
-                f"https://graph.microsoft.com/v1.0/drives/{drive_id}/root/children",
-                headers=headers,
-                json={
-                    "name": default_user_folder.replace(" ", "_"),
-                    "folder": {}
-                }
-            )
-            print(response.text, response.status_code)
-
-            if response.status_code == 201:
-                user.save()
-                serializer = UserSerializer(user)
-                return Response(serializer.data)
-            else:
-                return Response({'Message': f'Erro: {response.text}'})
-        except Exception as error:
-            print(error)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )
 
     def destroy(self, request, *args, **kwargs):
         return super(UserViewset, self).destroy(request, *args, **kwargs)

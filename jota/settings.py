@@ -49,6 +49,7 @@ PROJECT_APPS = [
 THIRDY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     'drf_spectacular',
     'django_celery_beat',
 ]
@@ -169,6 +170,6 @@ DEFAULT_API_URL_PREFIX = 'api/v1'
 AUTH_USER_MODEL = 'users.User'
 
 # Celery
-CELERY_BROKER_URL = 'redis://192.168.3.60:6379/0'
+CELERY_BROKER_URL = config("CELERY_URL")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

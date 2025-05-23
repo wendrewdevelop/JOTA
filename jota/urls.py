@@ -30,9 +30,23 @@ from users.views import (
     UserViewset,
     CustomObtainAuthToken
 )
+from news.views import (
+    NewsViewSet
+)
 
 
 router = routers.DefaultRouter()
+router.register(
+    r'users',
+    UserViewset,
+    basename='User'
+)
+router.register(
+    r'news',
+    NewsViewSet,
+    basename='News'
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
