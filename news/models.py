@@ -39,7 +39,7 @@ class News(models.Model):
     status = models.CharField(
         max_length=10,
         choices=STATUS_CHOICES,
-        default='rascunho',  # Valor padrão
+        default='draft',
         verbose_name='Status'
     )
     scheduled_post = models.DateTimeField(

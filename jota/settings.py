@@ -143,9 +143,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # REST FRAMEWORK CONFIG
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ]
+
 }
 
 # JWT CONFIG
@@ -161,8 +168,7 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'JOTA API',
     'DESCRIPTION': 'JOTA API DOCUMENTATION',
     'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-    # OTHER SETTINGS
+    'SERVE_INCLUDE_SCHEMA': True,
 }
 
 # API SETTINGS
@@ -173,3 +179,4 @@ AUTH_USER_MODEL = 'users.User'
 CELERY_BROKER_URL = config("CELERY_URL")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

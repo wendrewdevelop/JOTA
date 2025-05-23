@@ -13,6 +13,7 @@ dependencies = [
     "djangorestframework-simplejwt>=5.5.0",
     "drf-spectacular>=0.28.0",
     "httpx>=0.28.1",
+    "ipython>=9.2.0",
     "pandas>=2.2.3",
     "pillow>=11.2.1",
     "psycopg2-binary>=2.9.10",

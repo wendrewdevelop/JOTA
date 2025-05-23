@@ -6,10 +6,11 @@ from rest_framework import status
 from .models import News
 from .serializers import NewsSerializer
 
+
 class NewsViewSet(ModelViewSet):
     queryset = News.objects.all().order_by('-published_at')
     serializer_class = NewsSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    #permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
@@ -31,12 +32,19 @@ class NewsViewSet(ModelViewSet):
         serializer.save()
 
     def update(self, request, *args, **kwargs):
-        partial = False
+        partial = kwargs.pop('partial', False)
         instance = self.get_object()
+
+        # Se 'post_image' não estiver em request.data, mantém o valor atual
+        if not request.data.get('post_image'):
+            request.data._mutable = True  # só se for QueryDict
+            request.data['post_image'] = instance.post_image
+
         serializer = self.get_serializer(instance, data=request.data, partial=partial, context={'request': request})
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.data)
 
     def partial_update(self, request, *args, **kwargs):
         partial = True

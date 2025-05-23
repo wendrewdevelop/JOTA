@@ -34,13 +34,6 @@ class UserViewset(ModelViewSet):
             return [AllowAny()]
         return super().get_permissions()
 
-    def get_authenticators(self):
-        if self.request.method == 'POST' and self.request.path.endswith('recover_password/'):
-            return []
-        if self.request.method == 'POST' and self.request.path.endswith('update_password/'):
-            return []
-        return super().get_authenticators()
-
     def get_queryset(self):
         return User.objects.all()
 

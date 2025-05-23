@@ -18,8 +18,10 @@ class NewsSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['news_id', 'published_at']
 
-    # Campo adicional para URL da imagem, caso precise
-    post_image_url = serializers.SerializerMethodField()
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+
+        return data
 
     def get_post_image_url(self, obj):
         request = self.context.get('request')
