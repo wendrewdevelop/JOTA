@@ -39,12 +39,12 @@ router = routers.DefaultRouter()
 router.register(
     r'users',
     UserViewset,
-    basename='User'
+    basename='user'
 )
 router.register(
     r'news',
     NewsViewSet,
-    basename='News'
+    basename='news'
 )
 
 urlpatterns = [
