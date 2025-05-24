@@ -24,10 +24,10 @@
 - [x] Implementar autenticação baseada em JWT para controle de acesso.
 - [x] Criar endpoints para:
   - [x] Geração e renovação de tokens JWT.
-  - [x] Gerenciamento de usuários conforme perfis:
-    - [x] Admin: Acesso total (criação, edição, exclusão e gerenciamento de usuários).
-    - [x] Editor: Pode criar, editar e excluir apenas suas próprias notícias.
-    - [x] Leitor: Pode visualizar apenas notícias publicadas, conforme o plano contratado.
+  - [ ] Gerenciamento de usuários conforme perfis:
+    - [ ] Admin: Acesso total (criação, edição, exclusão e gerenciamento de usuários).
+    - [ ] Editor: Pode criar, editar e excluir apenas suas próprias notícias.
+    - [ ] Leitor: Pode visualizar apenas notícias publicadas, conforme o plano contratado.
 - [x] Definir acesso de leitores conforme o plano contratado:
   - [ ] JOTA Info: Acesso a notícias abertas para todos os usuários.
   - [ ] JOTA PRO: Acesso a conteúdos exclusivos de acordo com as verticais do plano.
@@ -54,8 +54,8 @@
 - [x] Experiência com metodologias ágeis e integração/entrega contínua (diferencial).
 
 ### Infraestrutura e Deploy
-- [ ] Criar um `Dockerfile` para empacotar a aplicação.
-- [ ] Criar um `docker-compose.yml` para facilitar a execução local.
+- [x] Criar um `Dockerfile` para empacotar a aplicação.
+- [x] Criar um `docker-compose.yml` para facilitar a execução local.
  notícias publicadas, conforme o plano contratado.
 - [ ] Definir acesso de leitores conforme o plano contratado:
   - [ ] JOTA Info: Acesso a notícias abertas para todos os usuários.

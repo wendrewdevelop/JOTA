@@ -10,11 +10,25 @@ from .serializers import NewsSerializer
 class NewsViewSet(ModelViewSet):
     queryset = News.objects.all().order_by('-published_at')
     serializer_class = NewsSerializer
-    #permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True, context={'request': request})
+        user = request.user
+        print(f'User: {user}, Authenticated: {user.is_authenticated}, Plan: {user.plan_name}')
+        if user.is_authenticated:
+            user_plan = user.plan_name
+            queryset = self.get_queryset().filter(
+                plan=user_plan
+            )
+        else:
+            queryset = self.get_queryset().filter(
+                plan='info'
+            )
+        serializer = self.get_serializer(
+            queryset,
+            many=True,
+            context={'request': request}
+        )
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):

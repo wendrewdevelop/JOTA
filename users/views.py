@@ -17,6 +17,7 @@ from rest_framework.decorators import action
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.throttling import UserRateThrottle
+from rest_framework.generics import GenericAPIView
 from users.models import User
 from users.serializers import UserSerializer, CustomJWTAuthSerializer
 
@@ -55,7 +56,6 @@ class UserViewset(ModelViewSet):
             status=status.HTTP_201_CREATED,
             headers=headers
         )
-
     def destroy(self, request, *args, **kwargs):
         return super(UserViewset, self).destroy(request, *args, **kwargs)
 
@@ -89,11 +89,15 @@ class UserViewset(ModelViewSet):
             return Response({"error": "New password not provided."}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CustomJWTAuthView(APIView):
+class CustomJWTAuthView(GenericAPIView):
     throttle_classes = [UserRateThrottle]
     throttle_scope = 'user_individual'
+    serializer_class = CustomJWTAuthSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = CustomJWTAuthSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        return Response(
+            serializer.validated_data,
+            status=status.HTTP_200_OK
+        )

@@ -8,6 +8,18 @@ class News(models.Model):
         ('draft', 'Draft'),
         ('published', 'Published'),
     ]
+    #Poder, Tributos, Saúde, Energia e Trabalhista
+    CATEGORIES = [
+        ('authority', 'Poder'),
+        ('taxes', 'Tributos'),
+        ('health', 'Saúde'),
+        ('energy', 'Energia'),
+        ('labor', 'Trabalhista'),
+    ]
+    PLAN_CHOICES = [
+        ('info', 'JOTA Info'),
+        ('pro', 'JOTA Pro'),
+    ]
 
     news_id = models.UUIDField(
         primary_key=True,
@@ -41,6 +53,20 @@ class News(models.Model):
         choices=STATUS_CHOICES,
         default='draft',
         verbose_name='Status'
+    )
+    category = models.CharField(
+        max_length=100,
+        choices=CATEGORIES,
+        null=True,
+        blank=True
+    )
+    plan = models.CharField(
+        max_length=150,
+        choices=PLAN_CHOICES,
+        default='info',
+        verbose_name='Plano de assinatura',
+        null=False,
+        blank=False
     )
     scheduled_post = models.DateTimeField(
         null=True,
