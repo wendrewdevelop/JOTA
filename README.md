@@ -25,9 +25,9 @@
 - [x] Criar endpoints para:
   - [x] Geração e renovação de tokens JWT.
   - [x] Gerenciamento de usuários conforme perfis:
-    - [ ] Admin: Acesso total (criação, edição, exclusão e gerenciamento de usuários).
-    - [ ] Editor: Pode criar, editar e excluir apenas suas próprias notícias.
-    - [ ] Leitor: Pode visualizar apenas notícias publicadas, conforme o plano contratado.
+    - [x] Admin: Acesso total (criação, edição, exclusão e gerenciamento de usuários).
+    - [x] Editor: Pode criar, editar e excluir apenas suas próprias notícias.
+    - [x] Leitor: Pode visualizar apenas notícias publicadas, conforme o plano contratado.
 - [x] Definir acesso de leitores conforme o plano contratado:
   - [x] JOTA Info: Acesso a notícias abertas para todos os usuários.
   - [x] JOTA PRO: Acesso a conteúdos exclusivos de acordo com as verticais do plano.
@@ -44,8 +44,8 @@
 - [x] Conhecimento básico em bancos NoSQL (diferencial).
 
 ### Arquitetura e Processamento Assíncrono
-- [ ] Implementar fila de processamento para tarefas demoradas (ex.: envio de e-mails de notificação).
-- [ ] Utilizar arquitetura orientada a eventos para escalabilidade e desacoplamento dos serviços.
+- [x] Implementar fila de processamento para tarefas demoradas (ex.: envio de e-mails de notificação).
+- [x] Utilizar arquitetura orientada a eventos para escalabilidade e desacoplamento dos serviços.
 - [x] Conhecimento em microsserviços (diferencial).
 
 ### Testes Automatizados e CI/CD
