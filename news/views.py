@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
+from jota.permissions import IsAdminPermission, IsEditorOrReadOnly, IsReader
 from .models import News
 from .serializers import NewsSerializer
 
@@ -11,6 +12,27 @@ class NewsViewSet(ModelViewSet):
     queryset = News.objects.all().order_by('-published_at')
     serializer_class = NewsSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsAdminPermission(), IsEditorOrReadOnly()]
+        return [IsReader()]
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return News.objects.all().order_by(
+                '-published_at'
+            )
+        elif user.is_writer:
+            return News.objects.filter(
+                author=user
+            ).order_by('-published_at')
+        elif user.is_reader:
+            return News.objects.filter(
+                plan=user.plan_name
+            ).order_by('-published_at')
+        return News.objects.none()
 
     def list(self, request, *args, **kwargs):
         user = request.user

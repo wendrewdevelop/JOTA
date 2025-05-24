@@ -15,28 +15,28 @@
   - [x] Publicada: Notícia disponível para leitura.
 - [x] Funcionalidades adicionais:
   - [x] Permitir o agendamento de publicações.
-  - [ ] Categorizar notícias dentro das verticais: Poder, Tributos, Saúde, Energia e Trabalhista.
-  - [ ] Definir se uma notícia será acessível a todos os leitores ou restrita a clientes PRO.
-  - [ ] Definir a relação do cliente com o plano e a vertical.
+  - [x] Categorizar notícias dentro das verticais: Poder, Tributos, Saúde, Energia e Trabalhista.
+  - [x] Definir se uma notícia será acessível a todos os leitores ou restrita a clientes PRO.
+  - [x] Definir a relação do cliente com o plano e a vertical.
 - [x] Documentar a API utilizando Swagger.
 
 ### Autenticação e Perfis de Usuário
 - [x] Implementar autenticação baseada em JWT para controle de acesso.
 - [x] Criar endpoints para:
   - [x] Geração e renovação de tokens JWT.
-  - [ ] Gerenciamento de usuários conforme perfis:
+  - [x] Gerenciamento de usuários conforme perfis:
     - [ ] Admin: Acesso total (criação, edição, exclusão e gerenciamento de usuários).
     - [ ] Editor: Pode criar, editar e excluir apenas suas próprias notícias.
     - [ ] Leitor: Pode visualizar apenas notícias publicadas, conforme o plano contratado.
 - [x] Definir acesso de leitores conforme o plano contratado:
-  - [ ] JOTA Info: Acesso a notícias abertas para todos os usuários.
-  - [ ] JOTA PRO: Acesso a conteúdos exclusivos de acordo com as verticais do plano.
-- [ ] As verticais disponíveis são:
-  - [ ] Poder
-  - [ ] Tributos
-  - [ ] Saúde
-  - [ ] Energia
-  - [ ] Trabalhista
+  - [x] JOTA Info: Acesso a notícias abertas para todos os usuários.
+  - [x] JOTA PRO: Acesso a conteúdos exclusivos de acordo com as verticais do plano.
+- [x] As verticais disponíveis são:
+  - [x] Poder
+  - [x] Tributos
+  - [x] Saúde
+  - [x] Energia
+  - [x] Trabalhista
 - [x] Garantir que um plano pode incluir acesso a uma ou mais verticais.
 
 ### Banco de Dados
@@ -56,17 +56,6 @@
 ### Infraestrutura e Deploy
 - [x] Criar um `Dockerfile` para empacotar a aplicação.
 - [x] Criar um `docker-compose.yml` para facilitar a execução local.
- notícias publicadas, conforme o plano contratado.
-- [ ] Definir acesso de leitores conforme o plano contratado:
-  - [ ] JOTA Info: Acesso a notícias abertas para todos os usuários.
-  - [ ] JOTA PRO: Acesso a conteúdos exclusivos de acordo com as verticais do plano.
-- [ ] As verticais disponíveis são:
-  - [ ] Poder
-  - [ ] Tributos
-  - [ ] Saúde
-  - [ ] Energia
-  - [ ] Trabalhista
-- [ ] Garantir que um plano pode incluir acesso a uma ou mais verticais.
 
 ## Como executar o projeto
 

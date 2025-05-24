@@ -30,8 +30,6 @@ class UserViewset(ModelViewSet):
     #permission_classes = [IsAdminUser]
 
     def get_permissions(self):
-        if self.request.method == 'POST' and self.request.path.endswith('recover_password/'):
-            return [AllowAny()]
         if self.request.method == 'POST' and self.request.path.endswith('update_password/'):
             return [AllowAny()]
         return super().get_permissions()

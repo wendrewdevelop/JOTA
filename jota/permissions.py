@@ -1,10 +1,18 @@
 from rest_framework import permissions
 
 
-class UserPermission(permissions.BasePermission):
+class IsAdminPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        print(request.user)
-        return request.user.is_authenticated
-    
+        return bool(request.user and request.user.is_staff)
+
+
+class IsEditorOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        return super().has_object_permission(request, view, obj)
+        if request.method in ('GET', 'HEAD', 'OPTIONS'):
+            return True
+        return request.user.is_writer and obj.author == request.user
+
+
+class IsReader(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_reader)
